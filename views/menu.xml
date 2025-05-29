@@ -24,7 +24,7 @@
             name="Old Patient"
             parent="menu_patient_master"
             action="account.res_partner_action_customer"
-            sequence="2"
+            sequence="3"
     />
     <menuitem
             id="menu_female_patient"
@@ -32,6 +32,13 @@
             parent="menu_patient_master"
             action="female_patient_action"
             sequence="1"
+    />
+    <menuitem
+            id="menu_kid_patient"
+            name="Kid Patient"
+            parent="menu_patient_master"
+            action="kid_patient_action"
+            sequence="2"
     />
 
 </odoo>
