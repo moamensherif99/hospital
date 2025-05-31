@@ -30,6 +30,11 @@
                         </group>
                     </group>
                 </sheet>
+                <div class="oe_chatter">
+                    <field name="activity_ids"/>
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                </div>
             </form>
         </field>
     </record>
@@ -57,7 +62,7 @@
         <field name="name">Patient</field>
         <field name="res_model">hospital.patient</field>
         <field name="view_mode">tree,form</field>
-        <field name="context">{}</field>
+        <field name="context">{'search_default_is_male':1, 'search_default_gender_group':1}</field>
         <field name="domain">[]</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">

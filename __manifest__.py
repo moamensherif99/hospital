@@ -5,7 +5,7 @@
     'sequence': -100,
     'version': '17.0.1.0',
     'summery':'Hospital management system',
-    'depends': ['base','account'
+    'depends': ['base','account', 'mail',
                 ],
     'data': [
         'security/ir.model.access.csv',
