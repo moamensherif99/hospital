@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="appointment_tree_view" model="ir.ui.view">
+        <field name="name">appointment tree</field>
+        <field name="model">hospital.appointment</field>
+        <field name="arch" type="xml">
+            <list multi_edit="1" create="1" edit="1" delete="1" decoration-warning="state == 'in_consultation'" decoration-success="state == 'done'" decoration-danger="state == 'cancel'">
+                <field name="patient_id" width="1"/>
+                <field name="appointment_time" width="1" optional="1"/>
+                <field name="booking_date" width="1"/>
+                <field name="activity_ids" widget="list_activity" width="1"/>
+                <field name="state" widget="badge" decoration-warning="state == 'in_consultation'" decoration-success="state == 'done'" decoration-danger="state == 'cancel'" width="1"/>
+            </list>
+        </field>
+    </record>
+    <record id="appointment_form_view" model="ir.ui.view">
+        <field name="name">appointment form</field>
+        <field name="model">hospital.appointment</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_in_consultation"
+                            type="object"
+                            string="In Consultation"
+                            class="oe_highlight"
+                            icon="fa-arrow-right"/>
+
+                    <button name="action_done"
+                            type="object"
+                            string="Done"
+                            class="btn-success"
+                            icon="fa-check"/>
+
+                    <button name="action_cancel"
+                            type="object"
+                            string="Cancel"
+                            class="btn-danger"
+                            confirm="Are you sure you want to cancel this appointment?"
+                            icon="fa-times"/>
+
+                    <field name="state" widget="statusbar" statusbar_visible="draft,in_consultation,done"
+                           options="{'clickable': '0'}"/>
+                </header>
+                <sheet>
+                    <div>
+                        <h3>
+                            <field name="priority" widget="priority"/>
+                        </h3>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="patient_id"/>
+                            <field name="ref"/>
+                            <field name="gender"/>
+                            <field name="booking_date"/>
+                        </group>
+                        <group>
+                            <field name="appointment_time"/>
+                            <button name="action_test" string="Object Button" type="object" class="oe_highlight"
+                                    confirm="Are You Sure !!!"/>
+                            <button name="%(om_hospital.patient_action)d" string="Action Button" type="action"
+                                    class="oe_highlight"
+                                    confirm="Are You Sure !!!"
+                                    help="This Will Redirect You To Patient Records"/>
+                            """ action type is used to call an action defined in the module """
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Prescription" name="prescription">
+                            <field name="prescription" placeholder="Enter You Prescription"/>
+                        </page>
+                        <page string="Pharmacy" name="pharmacy">
+                            <group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="appointment_action" model="ir.actions.act_window">
+        <field name="name">Appointment</field>
+        <field name="res_model">hospital.appointment</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{}</field>
+        <field name="domain">[]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create Your First Appointment !!!
+            </p>
+        </field>
+    </record>
+</odoo>
