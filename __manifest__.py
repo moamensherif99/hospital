@@ -5,7 +5,7 @@
     'sequence': -100,
     'version': '18.0.1.0',
     'summery': 'Hospital management system',
-    'depends': ['base', 'account', 'mail', 'product','sale_management'
+    'depends': ['base', 'account', 'mail', 'product', 'sale_management'
                 ],
     'data': [
         'security/ir.model.access.csv',
@@ -19,8 +19,8 @@
         'views/appointment_view.xml',
         'views/patient_tag_view.xml',
         'views/sale_order_view.xml',
+        'views/res_config_settings_views.xml',
         'views/menu.xml',
-
     ],
     'demo': [
 

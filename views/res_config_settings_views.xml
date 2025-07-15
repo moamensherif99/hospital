@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="hospital_res_config_settings_view_form" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.hospital</field>
+            <field name="model">res.config.settings</field>
+            <field name="priority" eval="90"/>
+            <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="inside">
+                    <app data-string="Hospital" id="hospital" string="Hospital" name="om_hospital">
+                        <block title="Hospital Management" id="hospital_setting">
+                            <setting string="Cancellation Days">
+                                <div class="text-muted content-group mt16">
+                                    <span>Send an alert</span>
+                                    <field name="cancel_days" class="text-center" style="width: 10%; min-width: 4rem;"/>
+                                    <span>days before an appointment can be cancelled.</span>
+                                </div>
+                            </setting>
+                        </block>
+                        <block title="Hospital System" id="hospital_setting">
+                            <setting string="Cancellation Days">
+                                <div class="text-muted content-group mt16">
+                                    <span>Send an alert</span>
+                                    <field name="cancel_days" class="text-center" style="width: 10%; min-width: 4rem;"/>
+                                    <span> days before an appointment can be cancelled.</span>
+                                </div>
+                            </setting>
+                        </block>
+                    </app>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="hospital_config_settings_action" model="ir.actions.act_window">
+            <field name="name">Settings</field>
+            <field name="res_model">res.config.settings</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+            <field name="context">{'module' : 'om_hospital', 'bin_size': False}</field>
+        </record>
+    </data>
+</odoo>

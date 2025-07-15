@@ -64,8 +64,14 @@
             name="Tags"
             parent="menu_configuration"
             action="patient_tag_action"
-            sequence="0"
+            sequence="1"
     />
+    <menuitem id="hospital_config_settings_menu"
+              name="Settings"
+              parent="menu_configuration"
+              sequence="0"
+              action="hospital_config_settings_action"
+              groups="base.group_system"/>
     <menuitem
             id="menu_cancel_appointment"
             name="Cancellation"
