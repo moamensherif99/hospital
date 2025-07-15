@@ -1,0 +1,10 @@
+<odoo>
+    <data>
+        <record id="sequence_patient" model="ir.sequence">
+            <field name="name">sequence_patient</field>
+            <field name="code">patient_seq</field>
+            <field name="prefix">PT</field>
+            <field name="padding">13</field>
+        </record>
+    </data>
+</odoo>

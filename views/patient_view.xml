@@ -4,11 +4,12 @@
         <field name="name">patient tree</field>
         <field name="model">hospital.patient</field>
         <field name="arch" type="xml">
-            <list multi_edit="1" create="1" edit="1" delete="1">
+            <list export_xlsx="0" sample="1" multi_edit="1" create="1" edit="1" delete="1">
                 <field name="name" string="Patient Name"/>
                 <field name="ref"/>
                 <field name="age"/>
                 <field name="gender"/>
+                <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
             </list>
         </field>
     </record>
@@ -18,17 +19,38 @@
         <field name="arch" type="xml">
             <form>
                 <sheet>
+                    <field name="image" widget="image" class="oe_avatar"/>
+                    <div class="oe_title">
+                        <label for="ref" class="oe_edit_only"/>
+                        <h4>
+                            <field name="ref"/>
+                        </h4>
+                        <label for="name"/>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
                     <group>
                         <group>
-                            <field name="name"/>
                             <field name="date_of_birth"/>
                             <field name="age"/>
                             <field name="appointment_id"/>
+                            <field name="appointment_count"/>
                         </group>
                         <group>
-                            <field name="ref"/>
                             <field name="gender"/>
+                            <field name="male_power" invisible="gender != 'male'" required="gender == 'male'"/>
+                            <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
                             <field name="active" invisible="1"/>
+                        </group>
+                    </group>
+                    <group string="Other Information" name="other_info">
+                        <group>
+                            <field name="parent" invisible="age &gt;= 15 or gender == 'male'"/>
+                            <!--                            <field name="parent" invisible="['|', ('age', '>', 15), ('gender', '=', 'female')]"/>-->
+                            <field name="marital_status"/>
+                            <field name="partner_name" readonly="marital_status != 'married'"
+                                   required="marital_status == 'married'"/>
                         </group>
                     </group>
                 </sheet>
