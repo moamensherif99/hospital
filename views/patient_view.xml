@@ -4,10 +4,12 @@
         <field name="name">patient tree</field>
         <field name="model">hospital.patient</field>
         <field name="arch" type="xml">
-            <list export_xlsx="0" sample="1" multi_edit="1" create="1" edit="1" delete="1">
+            <list export_xlsx="0" sample="1" multi_edit="1" create="1" edit="1" delete="1" default_order="create_date desc">
                 <field name="name" string="Patient Name"/>
+                <field name="create_date" string="Create Date"/>
                 <field name="ref"/>
-                <field name="age"/>
+                <field name="age" avg="Average Age"/>
+                <field name="appointment_count" sum="Total Appointments"/>
                 <field name="gender"/>
                 <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
             </list>
@@ -19,11 +21,30 @@
         <field name="arch" type="xml">
             <form>
                 <sheet>
+                    <div name="button_box" class="oe_button_box">
+                        <button name="action_view_appointments" type="object" icon="fa-star">
+                            <field name="appointment_count" widget="statinfo" string="Appointment"/>
+                        </button>
+                    </div>
+                    <div class="alert alert-info text-center o_form_header" role="alert" style="position: relative;"
+                         invisible="is_birth_date == False">
+                        <a class="close" data-bs-dismiss="alert" href="#"
+                           style="position: absolute; top: 8px; right: 8px;">X
+                        </a>
+                        <strong>Today is birthday</strong>
+                        <div>
+                            wish
+                            <field name="name" readonly="1"/>
+                            a happy birthday
+                        </div>
+                    </div>
                     <field name="image" widget="image" class="oe_avatar"/>
                     <div class="oe_title">
                         <label for="ref" class="oe_edit_only"/>
                         <h4>
-                            <field name="ref"/>
+                            <field name="ref" force_save="1"/>
+                            <!--                            when u make a field readonly, it will not be saved and using on_change will not work so use-->
+                            <!--                            force_save="1" to save the value-->
                         </h4>
                         <label for="name"/>
                         <h1>
@@ -38,9 +59,10 @@
                             <field name="appointment_count"/>
                         </group>
                         <group>
-                            <field name="gender"/>
+                            <field name="gender" widget="radio"/>
                             <field name="male_power" invisible="gender != 'male'" required="gender == 'male'"/>
                             <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                            <field name="tag_ids" widget="many2many_checkboxes" options="{'color_field': 'color'}"/>
                             <field name="active" invisible="1"/>
                         </group>
                     </group>
@@ -51,6 +73,11 @@
                             <field name="marital_status"/>
                             <field name="partner_name" readonly="marital_status != 'married'"
                                    required="marital_status == 'married'"/>
+                        </group>
+                        <group>
+                            <field name="phone" widget="phone"/>
+                            <field name="email" widget="email"/>
+                            <field name="website" widget="url"/>
                         </group>
                     </group>
                 </sheet>

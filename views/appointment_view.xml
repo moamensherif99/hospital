@@ -15,10 +15,10 @@
                             icon="fa-arrow-right"
                     />
                 </header>
-                <field name="patient_id" width="1"/>
+                <field name="patient_id" width="1" decoration-bf="1"/>
                 <field name="ref" width="1"/>
                 <field name="doctor_id" width="1" widget="many2one_avatar_user"/>
-                <field name="gender" width="1"/>
+                <field name="gender" width="1" decoration-it="1"/>
                 <field name="appointment_time" width="1" optional="1"/>
                 <field name="booking_date" width="1"/>
                 <field name="activity_ids" widget="list_activity" width="1"/>
@@ -36,140 +36,195 @@
                 />
                 <groupby name="patient_id">
                     <button name="edit" type="edit" icon="fa-edit" title="Edit"/>
-                    <button name="action_test" type="object" string="Don't Click Me" class="fa fa-heartbeat" aria-hidden="true"/>
+                    <button name="action_test" type="object" string="Don't Click Me" class="fa fa-heartbeat"
+                            aria-hidden="true"/>
                 </groupby>
-        </list>
-    </field>
-</record>
-<record id="appointment_activity_view" model="ir.ui.view">
-<field name="name">appointment.activity</field>
-<field name="model">hospital.appointment</field>
-<field name="arch" type="xml">
-    <activity string="Appointments">
-        <field name="patient_id"/>
-        <!--                <field name="ref"/>-->
-        <!--                <field name="doctor_id"/>-->
-        <templates>
-            <div t-name="activity-box">
+                <field name="progress" widget="progressbar" width="1"/>
+            </list>
+        </field>
+    </record>
+    <record id="appointment_activity_view" model="ir.ui.view">
+        <field name="name">appointment.activity</field>
+        <field name="model">hospital.appointment</field>
+        <field name="arch" type="xml">
+            <activity string="Appointments">
+                <field name="patient_id"/>
+                <!--                <field name="ref"/>-->
+                <!--                <field name="doctor_id"/>-->
+                <templates>
+                    <div t-name="activity-box">
 
-                <img t-if="record.patient_id.raw_value"
-                     t-att-src="activity_image('hospital.patient', 'image', record.patient_id.raw_value)"
-                     role="img" t-att-alt="record.patient_id.value"/>
+                        <img t-if="record.patient_id.raw_value"
+                             t-att-src="activity_image('hospital.patient', 'image', record.patient_id.raw_value)"
+                             role="img" t-att-alt="record.patient_id.value"/>
 
-                <div class="ms-2">
-                    <field name="patient_id" display="full" class="o_text_block"/>
+                        <div class="ms-2">
+                            <field name="patient_id" display="full" class="o_text_block"/>
 
-                    <!--                            <div class="text-muted">-->
-                    <!--                                Ref:-->
-                    <!--                                <field name="ref" class="o_text_inline"/>-->
-                    <!--                                - -->
-                    <!--                                <field name="doctor_id" class="o_text_inline"/>-->
-                    <!--                            </div>-->
-                </div>
-            </div>
-        </templates>
-    </activity>
-</field>
-</record>
-<record id="appointment_form_view" model="ir.ui.view">
-<field name="name">appointment form</field>
-<field name="model">hospital.appointment</field>
-<field name="arch" type="xml">
-    <form>
-        <header>
-            <button name="action_in_consultation"
-                    type="object"
-                    string="In Consultation"
-                    class="oe_highlight"
-                    icon="fa-arrow-right"
-                    invisible="state != 'draft'"/>
-            <button name="action_done"
-                    type="object"
-                    string="Mark As Done"
-                    class="btn-success"
-                    icon="fa-check"
-                    invisible="state in ('draft','done')"
-                    data-hotkey="v"/>
-            <!--                    <button name="%(om_hospital.cancel_appointment_action)d"-->
-            <!--                            type="action"-->
-            <!--                            string="Cancel"-->
-            <!--                            context="{'default_appointment_id': id}"-->
-            <!--                            class="btn-danger"-->
-            <!--                            icon="fa-times"-->
-            <!--                            invisible="state != 'done'"-->
-            <!--                            data-hotkey="z"/>-->
-            <button name="action_cancel"
-                    type="object"
-                    string="Cancel"
-                    context="{'default_appointment_id': id , 'default_reason': 'Patient Cancelled'}"
-                    class="btn-danger"
-                    confirm="Are you sure you want to cancel this appointment?"
-                    icon="fa-times"
-                    invisible="state != 'done'"
-                    data-hotkey="z"/>
-            <field name="state" widget="statusbar" statusbar_visible="draft,in_consultation,done"
-                   options="{'clickable': '0'}"/>
-        </header>
-        <sheet>
-            <div>
-                <h3>
-                    <field name="priority" widget="priority"/>
-                </h3>
-            </div>
-            <group>
-                <group>
-                    <field name="patient_id"/>
-                    <field name="ref"/>
-                    <field name="gender"/>
-                    <field name="doctor_id" widget="many2one_avatar_user"/>
-                    <field name="booking_date" default_focus="1"/>
-                </group>
-                <group>
-                    <field name="hide_sales_price" groups="base.group_no_one" widget="boolean_toggle"/>
-                    <field name="appointment_time"/>
-                    <button name="action_test" string="Object Button" type="object" class="oe_highlight"
-                            confirm="Are You Sure !!!"/>
-                    <button name="%(om_hospital.patient_action)d" string="Action Button" type="action"
+                            <!--                            <div class="text-muted">-->
+                            <!--                                Ref:-->
+                            <!--                                <field name="ref" class="o_text_inline"/>-->
+                            <!--                                - -->
+                            <!--                                <field name="doctor_id" class="o_text_inline"/>-->
+                            <!--                            </div>-->
+                        </div>
+                    </div>
+                </templates>
+            </activity>
+        </field>
+    </record>
+    <record id="appointment_form_view" model="ir.ui.view">
+        <field name="name">appointment form</field>
+        <field name="model">hospital.appointment</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_share_whatsapp"
+                            type="object"
+                            string="Share on WhatsApp"
                             class="oe_highlight"
-                            confirm="Are You Sure !!!"
-                            help="This Will Redirect You To Patient Records"/>
-                    """ action type is used to call an action defined in the module """
-                </group>
-            </group>
-            <notebook>
-                <page string="Prescription" name="prescription">
-                    <field name="prescription" placeholder="Enter You Prescription"
-                           options="{'resizable': false, 'codeview': true}"/>
-                </page>
-                <page string="Pharmacy" name="pharmacy">
-                    <field name="appointment_pharmacy_lines_ids">
-                        <list editable="bottom">
-                            <field name="product_id"/>
-                            <field name="price_unit" column_invisible="parent.hide_sales_price"/>
-                            <field name="qty"/>
-                        </list>
-                    </field>
+                            icon="fa-whatsapp"/>
+                    <button name="action_send_email"
+                            type="object"
+                            string="Send Email"
+                            class="oe_highlight"
+                            icon="fa-envelope"
+                            invisible="state == 'draft'"/>
+                    <button name="action_in_consultation"
+                            type="object"
+                            string="In Consultation"
+                            class="oe_highlight"
+                            icon="fa-arrow-right"
+                            invisible="state != 'draft'"/>
+                    <button name="action_done"
+                            type="object"
+                            string="Mark As Done"
+                            class="btn-success"
+                            icon="fa-check"
+                            invisible="state in ('draft','done')"
+                            data-hotkey="v"/>
+                    <!--                    <button name="%(om_hospital.cancel_appointment_action)d"-->
+                    <!--                            type="action"-->
+                    <!--                            string="Cancel"-->
+                    <!--                            context="{'default_appointment_id': id}"-->
+                    <!--                            class="btn-danger"-->
+                    <!--                            icon="fa-times"-->
+                    <!--                            invisible="state != 'done'"-->
+                    <!--                            data-hotkey="z"/>-->
+                    <button name="action_cancel"
+                            type="object"
+                            string="Cancel"
+                            context="{'default_appointment_id': id , 'default_reason': 'Patient Cancelled'}"
+                            class="btn-danger"
+                            confirm="Are you sure you want to cancel this appointment?"
+                            icon="fa-times"
+                            invisible="state != 'done'"
+                            data-hotkey="z"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,in_consultation,done"
+                           options="{'clickable': '0'}"/>
+                </header>
+                <sheet>
+                    <div name="button_box" class="oe_button_box">
+                        <button name="action_smart_patient" type="object" icon="fa-user-md" widget="statinfo" string="patient info"/>
+                    </div>
+                    <div>
+                        <h3>
+                            <field name="priority" widget="priority"/>
+                        </h3>
+                    </div>
                     <group>
+                        <group>
+                            <field name="patient_id" widget="selection"/>
+                            <field name="ref"/>
+                            <field name="gender"/>
+                            <field name="doctor_id" widget="many2one_avatar_user"/>
+                            <field name="booking_date" default_focus="1"/>
+                            <field name="duration"/>
+                            <field name="operation_id"/>
+                        </group>
+                        <group>
+                            <field name="hide_sales_price" groups="base.group_no_one" widget="boolean_toggle"/>
+                            <field name="appointment_time"/>
+
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="currency_id" groups="base.group_multi_currency"/>
+
+                            <button name="action_test" string="Object Button" type="object" class="oe_highlight"
+                                    confirm="Are You Sure !!!"/>
+                            <button name="%(om_hospital.patient_action)d" string="Action Button" type="action"
+                                    class="oe_highlight"
+                                    confirm="Are You Sure !!!"
+                                    help="This Will Redirect You To Patient Records"/>
+                            """ action type is used to call an action defined in the module """
+                            <button name="action_notification" string="Action Notification" type="object" class="oe_highlight"/>
+                        </group>
                     </group>
-                </page>
-            </notebook>
-        </sheet>
-        <chatter/>
-    </form>
-</field>
-</record>
-
-
-<record id="appointment_action" model="ir.actions.act_window">
-<field name="name">Appointment</field>
-<field name="res_model">hospital.appointment</field>
-<field name="view_mode">list,form,activity</field>
-<field name="context">{}</field>
-<field name="domain">[]</field>
-<field name="help" type="html">
-    <p class="o_view_nocontent_smiling_face">
-        Create Your First Appointment !!!
-    </p>
-</field>
-</record>
-        </odoo>
+                    <notebook>
+                        <page string="Progress" name="progress">
+                            <field name="progress" widget="gauge"/>
+                        </page>
+                        <page string="Prescription" name="prescription">
+                            <field name="prescription" placeholder="Enter You Prescription"
+                                   options="{'resizable': false, 'codeview': true}"/>
+                        </page>
+                        <page string="Pharmacy" name="pharmacy">
+                            <field name="appointment_pharmacy_lines_ids">
+                                <list editable="bottom">
+                                    <field name="sl_no" readonly="1"/>
+                                    <field name="product_id"/>
+                                    <field name="price_unit" widget="monetary" options="{'field_digits': True}"
+                                           column_invisible="parent.hide_sales_price"/>
+                                    <field name="qty"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                    <field name="price_subtotal"/>
+                                </list>
+                            </field>
+                            <group class="oe_subtotal_footer oe_right">
+                                <field name="amount_total" decoration-bf="1" class="oe_subtotal_footer_separator" widget="monetary"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="appointment_calendar_view" model="ir.ui.view">
+        <field name="name">appointment calender</field>
+        <field name="model">hospital.appointment</field>
+        <field name="arch" type="xml">
+            <calendar string="Appointments"
+                      date_start="booking_date" date_delay="duration"
+                      mode="month" color="state" create="False" hide_time="1"
+                      form_view_id="%(om_hospital.appointment_form_view)d"
+                      event_open_popup="1" event_limit="3"
+            >
+<!--                                                      i can color using patient_id field-->
+                <field name="patient_id" filters="1" avatar_field="image"/>
+                <field name="state" invisible="1" filters="1"/>
+            </calendar>
+        </field>
+    </record>
+    <record id="appointment_action" model="ir.actions.act_window">
+        <field name="name">Appointment</field>
+        <field name="res_model">hospital.appointment</field>
+        <field name="view_mode">list,form,calendar,activity</field>
+        <field name="context">{}</field>
+        <field name="domain">[]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create Your First Appointment !!!
+            </p>
+        </field>
+    </record>
+    <record id="appointment_done_action" model="ir.actions.server">
+        <field name="name">Mark AS Done</field>
+        <field name="model_id" ref="model_hospital_appointment"/>
+        <field name="binding_model_id" ref="model_hospital_appointment"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+            action = records.action_done()
+        </field>
+    </record>
+</odoo>

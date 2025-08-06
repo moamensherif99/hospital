@@ -66,6 +66,13 @@
             action="patient_tag_action"
             sequence="1"
     />
+    <menuitem
+            id="hospital_operation_menu"
+            name="Operations"
+            parent="menu_configuration"
+            action="hospital_operation_action"
+            sequence="2"
+    />
     <menuitem id="hospital_config_settings_menu"
               name="Settings"
               parent="menu_configuration"
@@ -78,5 +85,23 @@
             parent="menu_appointment_main"
             action="cancel_appointment_action"
             sequence="50"
+    />
+    <menuitem
+            id="menu_report"
+            name="Reports"
+            parent="menu_hospital_root"
+            sequence="3"
+    />
+    <menuitem
+            id="menu_report_appointment"
+            name="Appointment Reports"
+            parent="menu_report"
+            action="appointment_report_action"
+    />
+    <menuitem
+            id="menu_report_patient"
+            name="Patient Reports"
+            parent="menu_report"
+            action="patient_report_action"
     />
 </odoo>

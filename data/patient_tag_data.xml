@@ -1,6 +1,6 @@
 <odoo>
-    <data>
-        <record id="patient_tag_vip" model="patient.tag">
+    <data noupdate="1">
+        <record id="patient_tag_vip" model="patient.tag" forcecreate="1">
             <field name="name">VIP</field>
         </record>
         <record id="patient_tag_kid" model="patient.tag">

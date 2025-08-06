@@ -1,0 +1,32 @@
+<odoo>
+    <template id="report_saleorder_custom" inherit_id="sale.report_saleorder_document">
+        <xpath expr="//div[@id='informations']//div[@t-if='doc.user_id.name']" position="before">
+            <div t-if="doc.confirmed_user_id" class="col">
+                <strong>Confirmed User</strong>
+                <div t-field="doc.confirmed_user_id"></div>
+            </div>
+        </xpath>
+    </template>
+</odoo>
+
+<!--<odoo>-->
+<!--    <template id="report_saleorder_custom" inherit_id="sale.report_saleorder_document">-->
+<!--        <xpath expr="//div[@id='informations']//div[strong[text()='Salesperson']]" position="before">-->
+<!--            <div t-if="doc.confirmed_user_id" class="col">-->
+<!--                <strong>Confirmed User</strong>-->
+<!--                <div t-field="doc.confirmed_user_id"></div>-->
+<!--            </div>-->
+<!--        </xpath>-->
+<!--    </template>-->
+<!--</odoo>-->
+
+<!--<odoo>-->
+<!--    <template id="report_saleorder_custom" inherit_id="sale.report_saleorder_document">-->
+<!--        <xpath expr="//div[@id='informations']//div[div[@t-field='doc.user_id']]" position="before">-->
+<!--            <div t-if="doc.confirmed_user_id" class="col">-->
+<!--                <strong>Confirmed User</strong>-->
+<!--                <div t-field="doc.confirmed_user_id"></div>-->
+<!--            </div>-->
+<!--        </xpath>-->
+<!--    </template>-->
+<!--</odoo>-->

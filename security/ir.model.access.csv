@@ -4,3 +4,6 @@ hospital_appointment_access,hospital_appointment_access,model_hospital_appointme
 appointment_pharmacy_lines_access,appointment_pharmacy_lines_access,model_appointment_pharmacy_lines,base.group_user,1,1,1,1
 patient_tag_access,patient_tag_access,model_patient_tag,base.group_user,1,1,1,1
 cancel_appointment_wizard_access,cancel_appointment_wizard_access,model_cancel_appointment_wizard,base.group_user,1,1,1,1
+hospital_operation_access,hospital_operation_access,model_hospital_operation,base.group_user,1,1,1,1
+appointment.report.wizard_access,appointment_report_wizard_access,model_appointment_report_wizard,base.group_user,1,1,1,1
+patient.report.wizard_access,patient_report_wizard_access,model_patient_report_wizard,base.group_user,1,1,1,1

@@ -1,0 +1,180 @@
+<odoo>
+    <template id="report_patient_card_template">
+        <t t-call="web.basic_layout">
+            <t>
+                <style>
+                    .page {
+                    page-break-after: always;
+                    page-break-inside: avoid;
+                    }
+                </style>
+            </t>
+            <t t-foreach="docs" t-as="o">
+                <div class="page">
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <h2>Patient Card</h2>
+                        <hr/>
+                    </div>
+
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+                        <div>
+                            <p>
+                                <strong>Reference:</strong>
+                                <span t-esc="o.ref"/>
+                            </p>
+                            <p>
+                                <strong>Name:</strong>
+                                <span t-esc="o.name"/>
+                            </p>
+                            <p>
+                                <strong>Date of Birth:</strong>
+                                <span t-esc="o.date_of_birth"/>
+                            </p>
+                            <p>
+                                <strong>Age:</strong>
+                                <span t-esc="o.age"/>
+                            </p>
+                            <p>
+                                <strong>Gender:</strong>
+                                <span t-esc="o.gender"/>
+                            </p>
+                        </div>
+                        <div class="col-xs-3">
+                            <div>
+                                <span t-field="o.name"
+                                      t-options="{'widget':'barcode', 'humanreadable':1, 'width':400, 'height':100}"/>
+                            </div>
+                            <div style="border: 1px solid #ddd; padding: 4px; border-radius: 8px; background-color: #f9f9f9; width: 120px; height: 150px; text-align: center;">
+                                <img t-if="o.image" t-att-src="image_data_uri(o.image)"
+                                     style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;"
+                                     alt="Patient Image"/>
+                                <div t-if="not o.image" class="text-center text-muted" style="padding: 20px;">
+                                    No Image
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <p>
+                            <strong>Appointment:</strong>
+                            <span t-esc="o.appointment_id.display_name"/>
+                        </p>
+                        <p>
+                            <strong>Total Appointments:</strong>
+                            <span t-esc="o.appointment_count"/>
+                        </p>
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <p>
+                            <strong>Tags:</strong>
+                            <t t-foreach="o.tag_ids" t-as="tag">
+                                <span t-esc="tag.name" style="margin-right: 5px;"/>
+                            </t>
+                        </p>
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <p>
+                            <strong>Parent:</strong>
+                            <span t-esc="o.parent.name if o.parent else '-'"/>
+                        </p>
+                        <p>
+                            <strong>Marital Status:</strong>
+                            <span t-esc="o.marital_status"/>
+                        </p>
+                        <p>
+                            <strong>Partner Name:</strong>
+                            <span t-esc="o.partner_name"/>
+                        </p>
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <p>
+                            <strong>Phone:</strong>
+                            <span t-esc="o.phone"/>
+                        </p>
+                        <p>
+                            <strong>Email:</strong>
+                            <span t-esc="o.email"/>
+                        </p>
+                        <p>
+                            <strong>Website:</strong>
+                            <span t-esc="o.website"/>
+                        </p>
+                    </div>
+                    <div style="text-align: center; margin-top: 30px; border-top: 1px solid #ddd; padding-top: 20px;">
+                        <p>
+                            <strong>Patient QR Code</strong>
+                        </p>
+                        <div style="display: inline-block;">
+
+                            Option 1: Simple Patient ID (Recommended)
+                            <div style="margin-bottom: 10px;">
+                                <p style="font-size: 11px; margin: 5px 0; color: #666;">Patient ID Only (Best Quality)
+                                </p>
+                                <img t-attf-src="/report/barcode/Code128/#{o.ref}"
+                                     width="400" height="100"
+                                     style="border: 1px solid #ddd; padding: 5px; background: white;"
+                                     alt="Patient ID QR Code"/>
+                            </div>
+
+                            <!--                             Option 2: Structured Data (Good Quality) -->
+                            <!--                            <div style="margin-bottom: 10px;">-->
+                            <!--                                <p style="font-size: 11px; margin: 5px 0; color: #666;">Structured Patient Data</p>-->
+                            <!--                                <t t-set="qr_data"-->
+                            <!--                                   t-value="'ID:%s|NAME:%s|DOB:%s|PHONE:%s' % (o.ref, o.name[:20] if o.name else 'N/A', o.date_of_birth or 'N/A', o.phone[:15] if o.phone else 'N/A')"/>-->
+                            <!--                                <img t-attf-src="/report/barcode/QR/#{qr_data}"-->
+                            <!--                                     width="120" height="120"-->
+                            <!--                                     style="border: 1px solid #ddd; padding: 5px; background: white;"-->
+                            <!--                                     alt="Patient Data QR Code"/>-->
+                            <!--                            </div>-->
+
+
+                            <!--                             Option 4: JSON Format (Developer-Friendly)-->
+                            <!--                            <div style="margin-bottom: 10px;">-->
+                            <!--                                <p style="font-size: 11px; margin: 5px 0; color: #666;">JSON Format</p>-->
+                            <!--                                <t t-set="json_data"-->
+                            <!--                                   t-value="'{&quot;id&quot;:&quot;%s&quot;,&quot;name&quot;:&quot;%s&quot;,&quot;phone&quot;:&quot;%s&quot;}' % (o.ref, (o.name or '').replace('&quot;', '\&quot;')[:20], o.phone or '')"/>-->
+                            <!--                                <img t-attf-src="/report/barcode/QR/#{json_data}"-->
+                            <!--                                     width="120" height="120"-->
+                            <!--                                     style="border: 1px solid #ddd; padding: 5px; background: white;"-->
+                            <!--                                     alt="Patient JSON QR Code"/>-->
+                            <!--                            </div>-->
+
+                            Your Current Format (for comparison)
+                            <div style="margin-bottom: 10px;">
+                                <p style="font-size: 11px; margin: 5px 0; color: #999;">Current Format (Dense)</p>
+                                <img t-attf-src="/report/barcode/QR/#{o.name}|#{o.ref}|#{o.date_of_birth}|#{o.phone}"
+                                     width="120" height="120"
+                                     style="border: 1px solid #ddd; padding: 5px; background: white; opacity: 0.7;"
+                                     alt="Current QR Code"/>
+                            </div>
+
+                            <!--                            <div style="margin-bottom: 10px;">-->
+                            <!--                                <p style="font-size: 11px; margin: 5px 0; color: #666;">Simple Contact Format</p>-->
+                            <!--                                <t t-set="contact_data"-->
+                            <!--                                   t-value="'CONTACT: %s | PHONE: %s | ID: %s' % (o.name or 'Unknown', o.phone or 'N/A', o.ref)"/>-->
+                            <!--                                <img t-attf-src="/report/barcode/QR/#{contact_data}"-->
+                            <!--                                     width="120" height="120"-->
+                            <!--                                     style="border: 1px solid #ddd; padding: 5px; background: white;"-->
+                            <!--                                     alt="Patient Contact QR Code"/>-->
+                            <!--                            </div>-->
+
+                            <!--                            <div style="margin-bottom: 5px; text-align: center;">-->
+                            <!--                                <t t-set="qr_data" t-value="'%s|%s|%s|%s' % (o.name, o.ref, o.date_of_birth, o.phone)"/>-->
+                            <!--                                <img t-att-src="'/report/barcode/QR/%s' % qr_data"-->
+                            <!--                                     style="width: 150px; height: 150px;" alt="QR Code"/>-->
+                            <!--                            </div>-->
+
+                        </div>
+                        <p style="font-size: 12px; color: #666; margin-top: 10px;">
+                            Choose the format that works best for your scanning needs
+                        </p>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

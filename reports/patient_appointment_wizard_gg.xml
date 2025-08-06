@@ -1,0 +1,78 @@
+<odoo>
+    <template id="report_patient_appointment_wizard_template">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page" style="page-break-after: always; page-break-inside: avoid;">
+                    <div class="oe_structure"/>
+                    <div class="text-center">
+                        <h2>Appointment Details</h2>
+                    </div>
+                    <table>
+                        <tr>
+                            <td>Patient</td>
+                            <td>:</td>
+                            <td>
+                                <t t-if="form_data.get('patient_id')">
+                                    <t t-esc="form_data['patient_id'][1]"/>
+                                </t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Start Date</td>
+                            <td>:</td>
+                            <td>
+                                <t t-if="form_data.get('start_date')">
+                                    <t t-esc="form_data['start_date']"/>
+                                </t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>End Date</td>
+                            <td>:</td>
+                            <td>
+                                <t t-if="form_data.get('end_date')">
+                                    <t t-esc="form_data['end_date']"/>
+                                </t>
+                            </td>
+                        </tr>
+                    </table>
+                    <br/>
+                    <table class="table table-bordered m32">
+
+                            <thead>
+                                <tr>
+                                    <th name="th_reference" class="text-left">
+                                        <span>Reference</span>
+                                    </th>
+                                    <th name="th_age" class="text-left">
+                                        <span>Age</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                        <t t-set="appointment_count" t-value="0"/>
+                            <t t-foreach="appointments" t-as="line">
+                                <t t-set="appointment_count" t-value="appointment_count +1"/>
+                                <tr>
+                                    <td>
+                                        <span t-esc="line['ref']"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="line['age']"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        <tr>
+                            <td>
+                                <strong>Total Appointments</strong>
+                            </td>
+                            <td>
+                                <t t-esc="appointment_count"/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>
+
