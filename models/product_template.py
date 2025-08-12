@@ -3,7 +3,7 @@ from odoo import fields, models, api, _
 
 
 class ProductTemplate(models.Model):
-    _inherit = 'product.rec'
+    _inherit = 'product.template'
 
 
     last_stock_move_date = fields.Datetime(
